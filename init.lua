@@ -1,3 +1,4 @@
+local utils = require "astronvim.utils"
 return {
   -- Configure AstroNvim updates
   updater = {
@@ -25,7 +26,15 @@ return {
     virtual_text = true,
     underline = true,
   },
-
+  {
+    "nvim-treesitter/nvim-treesitter",
+    opts = function(_, opts)
+      if opts.ensure_installed ~= "all" then
+        opts.ensure_installed =
+          utils.list_insert_unique(opts.ensure_installed, { "bash", "markdown", "markdown_inline", "regex", "vim" })
+      end
+    end,
+  },
   lsp = {
     -- customize lsp formatting options
     formatting = {
